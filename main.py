@@ -3,6 +3,7 @@ import time ,urllib
 import mraa
 
 s = None
+finger=None
 step1 = '55AA000020000000000000000000000000000000000000001f01'
 step2 = '55AA000060000200000000000000000000000000000000006101'
 step3 = '55AA00006300060000000100F401000000000000000000005E02'
@@ -56,8 +57,7 @@ def Register():
 
 
 def setup():
-    global s
-    global finger
+    global s,finger
     # open serial COM port to /dev/ttyS0, which maps to UART0(D0/D1)
     # the baudrate is set to 57600 and should be the same as the one
     # specified in the Arduino sketch uploaded to ATmega32U4.
