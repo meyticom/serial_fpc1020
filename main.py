@@ -1,6 +1,9 @@
 import serial
-import time ,urllib
+import time ,urllib3
 import mraa
+
+http = urllib3.PoolManager()
+
 
 s = None
 finger=None
@@ -52,7 +55,7 @@ def Register():
     read = s.read(26)
     finger.flushInput()
     finger.flushOutput()
-    if (hex(ord(read[0]))=='0xaa')and(hex(ord(read[4]))=='0x46')and(hex(ord(read[6]))=='0x03'):
+    #if (hex(ord(read[0]))=='0xaa')and(hex(ord(read[4]))=='0x46')and(hex(ord(read[6]))=='0x03'):
 
 
 
@@ -75,32 +78,33 @@ def loop():
     if ((hex(ord(read[0]))=='0xaa')) and (hex(ord(read[4]))=='0x20')and(hex(ord(read[8]))=='0x0'):
         print("True")
         finger.write(step2.decode("hex"))
-        time.sleep(0.1)
+        time.sleep(0.4)
         finger.flushInput()
         finger.flushOutput()
         finger.write(step3.decode("hex"))
-        time.sleep(0.3)
+        time.sleep(0.1)
         read = finger.read(26)
-        #print(" ".join(hex(ord(n)) for n in read))
+        print(" ".join(hex(ord(n)) for n in read))
         finger.flushInput()
         finger.flushOutput()
-        ab = urllib.urlopen('http://185.8.175.58/api/fingerprint/101/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)))
-        if ab.read() =='Enter':
+        ab = http.request('GET','http://185.8.175.58/api/fingerprint/101/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)))
+        if ab.data =='Enter':
             print("Enter")
             s.write(wellcom.decode("hex"))
             time.sleep(1)
 
-        elif ab.read() =='Exit':
+        elif ab.data =='Exit':
             print("Exit")
             s.write(goodbye.decode("hex"))
             time.sleep(1)
 
-        elif ab.read()=='False':
+        elif ab.data=='False':
             s.write(error.decode("hex"))
             time.sleep(1)
 
         else:
-            pass
+            print(int(hex(ord(read[10]))[2:],16))
+            print(ab.read())
 
     elif (hex(ord(read[0]))=='0xaa')and(hex(ord(read[4]))=='0x20')and(hex(ord(read[8]))=='0x28'):
         print("False")
