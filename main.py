@@ -10,7 +10,7 @@ step1 = '55AA000020000000000000000000000000000000000000001f01'
 step2 = '55AA000060000200000000000000000000000000000000006101'
 step3 = '55AA00006300060000000100F401000000000000000000005E02'
 
-wellcom='cc010000bb'
+wellcome='cc010000bb'
 goodbye='cc020000bb'
 error='cc030000bb'
 
@@ -95,11 +95,13 @@ def loop():
             if json_data['enable']=="True":
                 if json_data['status']=="Enter":#ab.data =='Enter':
                     print("Enter")
-                    s.write(wellcom.decode("hex"))
+                    wellcome='cc01{0}bb'.format(read[9:11].encode("hex"))
+                    s.write(wellcome.decode("hex"))
                     time.sleep(1)
 
                 elif json_data['status']=="Exit":#ab.data =='Exit':
                     print("Exit")
+                    goodbye='cc02{0}bb'.format(read[9:11].encode("hex"))
                     s.write(goodbye.decode("hex"))
                     time.sleep(1)
 
@@ -109,7 +111,15 @@ def loop():
 
                 # else:
                 #     print(int(hex(ord(read[10]))[2:],16))
-                #     print(ab.read())
+                #     print(ab.read())    
+            elif json_data['status']=="NotActivate":
+                    message='cc1b0000bb'
+                    s.write(message.decode("hex"))
+                    time.sleep(1)
+            elif json_data['status']=="Register":
+                    message='cc1c0000bb'
+                    s.write(message.decode("hex"))
+                    time.sleep(1)
 
     elif (hex(ord(read[0]))=='0xaa')and(hex(ord(read[4]))=='0x20')and(hex(ord(read[8]))=='0x28'):
         print("False")
