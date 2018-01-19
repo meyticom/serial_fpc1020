@@ -1,4 +1,4 @@
-import time ,urllib3,json,serial,mreaa
+import time ,urllib3,json,serial,mraa
 
 
 http = urllib3.PoolManager()
@@ -86,7 +86,10 @@ def loop():
         print(" ".join(hex(ord(n)) for n in read))
         finger.flushInput()
         finger.flushOutput()
-        ab = http.request('GET','http://185.8.175.58/api/fingerprint/101/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)))
+	if hex(ord(read[4]))=='0x63' and hex(ord(read[6]))=='0x2':
+            return None
+#        ab = http.request('GET','http://185.8.175.58/api/fingerprint/101/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)))
+        ab = http.request('GET','http://192.168.1.101/json/100/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)))
         if ab.status==200:
             json_data=json.loads(ab.data)
             if json_data['enable']=="True":
