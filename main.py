@@ -1,6 +1,5 @@
-import serial
-import time ,urllib3
-import mraa
+import time ,urllib3,json,serial,mreaa
+
 
 http = urllib3.PoolManager()
 
@@ -88,23 +87,26 @@ def loop():
         finger.flushInput()
         finger.flushOutput()
         ab = http.request('GET','http://185.8.175.58/api/fingerprint/101/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)))
-        if ab.data =='Enter':
-            print("Enter")
-            s.write(wellcom.decode("hex"))
-            time.sleep(1)
+        if ab.status==200:
+            json_data=json.loads(ab.data)
+            if json_data['enable']=="True":
+                if json_data['status']=="Enter":#ab.data =='Enter':
+                    print("Enter")
+                    s.write(wellcom.decode("hex"))
+                    time.sleep(1)
 
-        elif ab.data =='Exit':
-            print("Exit")
-            s.write(goodbye.decode("hex"))
-            time.sleep(1)
+                elif json_data['status']=="Exit":#ab.data =='Exit':
+                    print("Exit")
+                    s.write(goodbye.decode("hex"))
+                    time.sleep(1)
 
-        elif ab.data=='False':
-            s.write(error.decode("hex"))
-            time.sleep(1)
+                # elif json_data['status']=="Enter":#ab.data=='False':
+                #     s.write(error.decode("hex"))
+                #     time.sleep(1)
 
-        else:
-            print(int(hex(ord(read[10]))[2:],16))
-            print(ab.read())
+                # else:
+                #     print(int(hex(ord(read[10]))[2:],16))
+                #     print(ab.read())
 
     elif (hex(ord(read[0]))=='0xaa')and(hex(ord(read[4]))=='0x20')and(hex(ord(read[8]))=='0x28'):
         print("False")
