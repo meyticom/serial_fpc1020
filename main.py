@@ -1,4 +1,4 @@
-import time ,urllib3,json,serial,mraa
+import time ,urllib3,json,serial
 
 
 http = urllib3.PoolManager()
@@ -65,7 +65,9 @@ def setup():
     # specified in the Arduino sketch uploaded to ATmega32U4.
     s = serial.Serial('/dev/ttyS1', 9600)
     finger=serial.Serial('/dev/ttyS0', 115200)
-
+    time.sleep(1)
+    wellcome='cc010000bb'
+    s.write(wellcome.decode("hex"))
 
 
 def loop():
@@ -88,8 +90,8 @@ def loop():
         finger.flushOutput()
 	if hex(ord(read[4]))=='0x63' and hex(ord(read[6]))=='0x2':
             return None
-#        ab = http.request('GET','http://185.8.175.58/api/fingerprint/101/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)))
-        ab = http.request('GET','http://192.168.1.101/json/100/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)))
+        ab = http.request('GET','http://185.8.175.58/json/101/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)))
+#        ab = http.request('GET','http://192.168.1.101/json/100/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)))
         if ab.status==200:
             json_data=json.loads(ab.data)
             if json_data['enable']=="True":
