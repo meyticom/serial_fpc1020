@@ -1,3 +1,4 @@
+
 import time ,urllib3,json,serial,mraa
 
 
@@ -109,7 +110,20 @@ def loop():
         blue.write(0)
         green.write(1)
         red.write(0)
-        ab = http.request('GET','http://185.8.175.58/json/101/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)))
+        try:
+            ab = http.request('GET','http://185.8.175.58/json/101/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)),timeout=4.0)
+        except urllib3.exceptions.TimeoutError:
+            print('Connection failed.Time out')
+            error='cc030000bb'
+            s.write(error.decode("hex"))
+            time.sleep(6)
+            return None
+        except urllib3.exceptions.HTTPError:
+            print('Connection failed. Http')
+            error='cc030000bb'
+            s.write(error.decode("hex"))
+            time.sleep(6)
+            return None
 #        ab = http.request('GET','http://192.168.1.101/json/100/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)))
         if ab.status==200:
             json_data=json.loads(ab.data)
