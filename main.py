@@ -78,10 +78,11 @@ def setup():
     s = serial.Serial('/dev/ttyS1', 9600)
     finger=serial.Serial('/dev/ttyS0', 115200)#921600
     blue.write(1)
+    time.sleep(2)
+    finger.write(serial_security_level.decode("hex"))
     time.sleep(1)
-    finger.write(serial_budrate.decode("hex"))
-    time.sleep(1)
-
+    #finger.flushInput()
+    #finger.flushOutput()
     wellcome='cc010000bb'
     s.write(wellcome.decode("hex"))
 
