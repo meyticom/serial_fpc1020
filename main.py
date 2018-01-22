@@ -90,6 +90,8 @@ def setup():
 def loop():
     # send "1" to the Arduino sketch on ATmega32U4.
     # the sketch will turn on the LED attached to D13 on the board
+    finger.flushInput()
+    finger.flushOutput()
     blue.write(1)
     green.write(0)
     red.write(0)
