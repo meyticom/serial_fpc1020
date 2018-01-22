@@ -13,7 +13,7 @@ blue.dir(mraa.DIR_OUT)
 red.dir(mraa.DIR_OUT)
 
 
-serial_budrate='55AA000002000500030500000000000000000000000000000E01'#set to 115200
+serial_budrate='55AA000002000500030500000000000000000000000000000E01'#set serital budrate to 115200
 
 s = None
 finger=None
