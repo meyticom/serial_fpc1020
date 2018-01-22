@@ -12,6 +12,8 @@ blue.dir(mraa.DIR_OUT)
 red.dir(mraa.DIR_OUT)
 
 
+serial_budrate='55AA000002000500030500000000000000000000000000000E01'#set to 115200
+
 s = None
 finger=None
 step1 = '55AA000020000000000000000000000000000000000000001f01'
@@ -72,9 +74,12 @@ def setup():
     # the baudrate is set to 57600 and should be the same as the one
     # specified in the Arduino sketch uploaded to ATmega32U4.
     s = serial.Serial('/dev/ttyS1', 9600)
-    finger=serial.Serial('/dev/ttyS0', 115200)
+    finger=serial.Serial('/dev/ttyS0', 921600)
     blue.write(1)
     time.sleep(1)
+    finger.write(serial_budrate.decode("hex"))
+    time.sleep(1)
+
     wellcome='cc010000bb'
     s.write(wellcome.decode("hex"))
 
