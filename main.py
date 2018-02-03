@@ -83,9 +83,6 @@ def setup():
     # specified in the Arduino sketch uploaded to ATmega32U4.
 
 
-    checksum('\x55\xAA\x00\x00\x44\x00\x04\x00\x01\x00\xF4\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
-
-
 
     s = serial.Serial('COM3', 9600)
     finger=serial.Serial('COM4', 115200)#921600
