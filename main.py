@@ -42,9 +42,15 @@ def EmptyId():
         return None
 
 
+def checksum(data):
+    k=sum(map(ord, data))
+    data+=k
+    print("dddddddddd",k)
+    return sum(map(ord, data))
+
 
 def DellAll():
-    send_command='55AA0000440004000100F4010000000000000000000000003D02'
+    send_command='\x55\xAA\x00\x00\x44\x00\x04\x00\x01\x00\xF4\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
     #recive_command='AA55010044000200000000000000000000000000000000004601'
     finger.write(send_command.decode("hex"))
     time.sleep(0.1)
@@ -75,8 +81,18 @@ def setup():
     # open serial COM port to /dev/ttyS0, which maps to UART0(D0/D1)
     # the baudrate is set to 57600 and should be the same as the one
     # specified in the Arduino sketch uploaded to ATmega32U4.
-    s = serial.Serial('/dev/ttyS1', 9600)
-    finger=serial.Serial('/dev/ttyS0', 115200)#921600
+
+
+    checksum('\x55\xAA\x00\x00\x44\x00\x04\x00\x01\x00\xF4\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+
+
+
+    s = serial.Serial('COM3', 9600)
+    finger=serial.Serial('COM4', 115200)#921600
+
+
+    # s = serial.Serial('/dev/ttyS1', 9600)
+    # finger=serial.Serial('/dev/ttyS0', 115200)#921600
     blue.write(1)
     time.sleep(2)
     finger.write(serial_security_level.decode("hex"))
@@ -128,36 +144,39 @@ def loop():
             time.sleep(6)
             return None
 #        ab = http.request('GET','http://192.168.1.101/json/100/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)))
-        json_data=json.loads(ab.data)
-        if json_data['enable']=="True":
-            if json_data['status']=="Enter":#ab.data =='Enter':
-                print("Enter")
-                wellcome='cc01{0}bb'.format(read[9:11].encode("hex"))
-                s.write(wellcome.decode("hex"))
-                time.sleep(1.5)
+        try:
+            json_data=json.loads(ab.data)
+            if json_data['enable']=="True":
+                if json_data['status']=="Enter":#ab.data =='Enter':
+                    print("Enter")
+                    wellcome='cc01{0}bb'.format(read[9:11].encode("hex"))
+                    s.write(wellcome.decode("hex"))
+                    time.sleep(1.5)
 
-            elif json_data['status']=="Exit":#ab.data =='Exit':
-                print("Exit")
-                goodbye='cc02{0}bb'.format(read[9:11].encode("hex"))
-                s.write(goodbye.decode("hex"))
-                time.sleep(1.5)
+                elif json_data['status']=="Exit":#ab.data =='Exit':
+                    print("Exit")
+                    goodbye='cc02{0}bb'.format(read[9:11].encode("hex"))
+                    s.write(goodbye.decode("hex"))
+                    time.sleep(1.5)
 
-            # elif json_data['status']=="Enter":#ab.data=='False':
-            #     s.write(error.decode("hex"))
-            #     time.sleep(1)
+                # elif json_data['status']=="Enter":#ab.data=='False':
+                #     s.write(error.decode("hex"))
+                #     time.sleep(1)
 
-            # else:
-            #     print(int(hex(ord(read[10]))[2:],16))
-            #     print(ab.read())
-        elif json_data['enable']=='False':
-            if json_data['status']=="NotActivate":
-                    message='cc1b0000bb'
-                    s.write(message.decode("hex"))
-                    time.sleep(3)
-            elif json_data['status']=="Register":
-                    message='cc1c0000bb'
-                    s.write(message.decode("hex"))
-                    time.sleep(3)
+                # else:
+                #     print(int(hex(ord(read[10]))[2:],16))
+                #     print(ab.read())
+            elif json_data['enable']=='False':
+                if json_data['status']=="NotActivate":
+                        message='cc1b0000bb'
+                        s.write(message.decode("hex"))
+                        time.sleep(3)
+                elif json_data['status']=="Register":
+                        message='cc1c0000bb'
+                        s.write(message.decode("hex"))
+                        time.sleep(3)
+        except:
+             return None
 
     elif (hex(ord(read[0]))=='0xaa')and(hex(ord(read[4]))=='0x20')and(hex(ord(read[8]))=='0x28'):
         print("False")
@@ -167,3 +186,27 @@ if __name__ == '__main__':
     setup()
     while True:
         loop()
+
+
+#4901
+# def checksum(data):
+#     k=sum(map(ord, data))
+#     print("sum",hex(k))
+#     print("a")
+#     if len(hex(k)[2:])%2 != 0:
+#         first= hex(k)[2:][1:3]
+#         scond=('0' + hex(k)[2:][:1])
+#         data += '\x'+first+'\x' +scond
+#         print("first",first)
+#         print("scond",scond)
+#         print("out",data)
+#         return data
+#     else:
+#         first=hex(k)[2:][2:]
+#         scond=hex(k)[2:][:2]
+#         data += first + scond
+#         print("out",data)
+#         return data
+#
+#
+# checksum('\x55\xAA\x00\x00\x44\x00\x04\x00\x01\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
