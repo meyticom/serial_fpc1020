@@ -84,12 +84,12 @@ def setup():
 
 
 
-    s = serial.Serial('COM3', 9600)
-    finger=serial.Serial('COM4', 115200)#921600
+    #s = serial.Serial('COM3', 9600)
+    #finger=serial.Serial('COM4', 115200)#921600
 
 
-    # s = serial.Serial('/dev/ttyS1', 9600)
-    # finger=serial.Serial('/dev/ttyS0', 115200)#921600
+    s = serial.Serial('/dev/ttyS1', 9600)
+    finger=serial.Serial('/dev/ttyS0', 115200)#921600
     blue.write(1)
     time.sleep(2)
     finger.write(serial_security_level.decode("hex"))
@@ -110,19 +110,22 @@ def loop():
     red.write(0)
     finger.write(step1.decode("hex"))
     time.sleep(0.1)
-    read=finger.read(26)
+    while s.inWaiting() > 0:
+        read=finger.read(1)
     print(" ".join(hex(ord(n)) for n in read))
     if ((hex(ord(read[0]))=='0xaa')) and (hex(ord(read[4]))=='0x20')and(hex(ord(read[8]))=='0x0'):
         print("True")
         finger.write(step2.decode("hex"))
         time.sleep(0.4)
-        read = finger.read(26)
+        while s.inWaiting() > 0:
+            read = finger.read(26)
         print(" ".join(hex(ord(n)) for n in read))
         # finger.flushInput()
         # finger.flushOutput()
         finger.write(step3.decode("hex"))
         time.sleep(0.2)
-        read = finger.read(26)
+        while s.inWaiting() > 0:
+            read = finger.read(26)
         print(" ".join(hex(ord(n)) for n in read))
         # finger.flushInput()
         # finger.flushOutput()
