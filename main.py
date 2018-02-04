@@ -1,4 +1,3 @@
-
 import time ,urllib3,json,serial,mraa
 
 
@@ -77,7 +76,7 @@ def Register():
 
 
 def setup():
-    global s,finger
+    global s,finger,read
     # open serial COM port to /dev/ttyS0, which maps to UART0(D0/D1)
     # the baudrate is set to 57600 and should be the same as the one
     # specified in the Arduino sketch uploaded to ATmega32U4.
@@ -103,32 +102,29 @@ def setup():
 def loop():
     # send "1" to the Arduino sketch on ATmega32U4.
     # the sketch will turn on the LED attached to D13 on the board
-    # finger.flushInput()
+    finger.flushInput()
     # finger.flushOutput()
     blue.write(1)
     green.write(0)
     red.write(0)
     finger.write(step1.decode("hex"))
     time.sleep(0.1)
-    while s.inWaiting() > 0:
-        read=finger.read(1)
+    read=finger.read(26)
+    finger.flushInput()
     print(" ".join(hex(ord(n)) for n in read))
     if ((hex(ord(read[0]))=='0xaa')) and (hex(ord(read[4]))=='0x20')and(hex(ord(read[8]))=='0x0'):
         print("True")
+        finger.flushInput()
         finger.write(step2.decode("hex"))
         time.sleep(0.4)
-        while s.inWaiting() > 0:
-            read = finger.read(26)
+        read = finger.read(26)
         print(" ".join(hex(ord(n)) for n in read))
-        # finger.flushInput()
-        # finger.flushOutput()
+        finger.flushInput()
         finger.write(step3.decode("hex"))
         time.sleep(0.2)
-        while s.inWaiting() > 0:
-            read = finger.read(26)
+        read = finger.read(26)
         print(" ".join(hex(ord(n)) for n in read))
-        # finger.flushInput()
-        # finger.flushOutput()
+        finger.flushInput()
         if hex(ord(read[4]))=='0x63' and hex(ord(read[6]))=='0x2':
             blue.write(0)
             green.write(0)
