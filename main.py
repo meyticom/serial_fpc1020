@@ -1,4 +1,7 @@
+#!/usr/bin/python
 import time ,urllib3,json,serial,mraa
+import sqlite3
+from sqlite3 import Error
 
 
 http = urllib3.PoolManager()
@@ -25,6 +28,54 @@ wellcome='cc010000bb'
 goodbye='cc020000bb'
 error='cc030000bb'
 
+
+
+##############databaise ###############################################
+def create_connection(db_file):
+    """ create a database connection to the SQLite database
+        specified by the db_file
+    :param db_file: database file
+    :return: Connection object or None
+    """
+    try:
+        conn = sqlite3.connect(db_file)
+        return conn
+    except Error as e:
+        print(e)
+
+    return None
+
+def select_all_tasks(conn):
+    # """
+    # Query all rows in the tasks table
+    # :param conn: the Connection object
+    # :return:
+    # """
+    # cur = conn.cursor()
+    # cur.execute("SELECT * FROM tasks")
+    #
+    # rows = cur.fetchall()
+    #
+    # for row in rows:
+    #     print(row)
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT, fingerid TEXT,
+                           time TEXT, status TEXT , push BOOL)
+    ''')
+    conn.commit()
+
+def insert_data(conn,id):
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO users(fingerid,time,status,push) VALUES ('Andy Hunter', '7/24/2012', 'Xplore Records', 1)")
+    conn.commit()
+
+
+def update_data(conn,id,status):
+    cursor = conn.cursor()
+    # cursor.execute("INSERT INTO users(fingerid,time,status,push) VALUES ('Andy Hunter', '7/24/2012', 'Xplore Records', 1)")
+    conn.execute("UPDATE users set status = ? where ID = ?",(status,id))
+    conn.commit()
 
 
 def EmptyId():
@@ -76,19 +127,23 @@ def Register():
 
 
 def setup():
-    global s,finger,read
+    global s,finger,read,conn
     # open serial COM port to /dev/ttyS0, which maps to UART0(D0/D1)
     # the baudrate is set to 57600 and should be the same as the one
     # specified in the Arduino sketch uploaded to ATmega32U4.
+    database = "pythonsqlite.sqlite3"
+
+    # create a database connection
+    conn = create_connection(database)
+    
+    select_all_tasks(conn)
+
+    s = serial.Serial('COM3', 9600)
+    finger=serial.Serial('COM4', 115200)#921600
 
 
-
-    #s = serial.Serial('COM3', 9600)
-    #finger=serial.Serial('COM4', 115200)#921600
-
-
-    s = serial.Serial('/dev/ttyS1', 9600)
-    finger=serial.Serial('/dev/ttyS0', 115200)#921600
+    # s = serial.Serial('/dev/ttyS1', 9600)
+    # finger=serial.Serial('/dev/ttyS0', 115200)#921600
     blue.write(1)
     time.sleep(2)
     finger.write(serial_security_level.decode("hex"))
@@ -135,11 +190,12 @@ def loop():
         green.write(1)
         red.write(0)
         try:
-            ab = http.request('GET','http://185.8.175.58/json/101/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)),timeout=5.0)
+            ab = http.request('GET','http://185.8.175.58/json/101/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)),timeout=3.0)
         except urllib3.exceptions.HTTPError:
             print('Connection failed. Http')
             error='cc030000bb'
             s.write(error.decode("hex"))
+            insert_data(conn, '2')
             time.sleep(6)
             return None
 #        ab = http.request('GET','http://192.168.1.101/json/100/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)))
