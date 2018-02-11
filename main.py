@@ -135,15 +135,15 @@ def setup():
 
     # create a database connection
     conn = create_connection(database)
-    
+
     select_all_tasks(conn)
 
-    s = serial.Serial('COM3', 9600)
-    finger=serial.Serial('COM4', 115200)#921600
+    # s = serial.Serial('COM3', 9600)
+    # finger=serial.Serial('COM4', 115200)#921600
 
 
-    # s = serial.Serial('/dev/ttyS1', 9600)
-    # finger=serial.Serial('/dev/ttyS0', 115200)#921600
+    s = serial.Serial('/dev/ttyS1', 9600)
+    finger=serial.Serial('/dev/ttyS0', 115200)#921600
     blue.write(1)
     time.sleep(2)
     finger.write(serial_security_level.decode("hex"))
