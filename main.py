@@ -67,7 +67,7 @@ def select_all_tasks(conn):
 
 def insert_data(conn,id,status):
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO users(fingerid,time,status,push) VALUES ('Andy Hunter', jdatetime.datetime.now(), status, 1)")
+    cursor.execute("INSERT INTO users(fingerid,time,status,push) VALUES ('Andy Hunter','{0}','{1}', 1)".format(jdatetime.datetime.now(),status))
     conn.commit()
 
 
@@ -142,7 +142,7 @@ def setup():
     # create a database connection
     conn = create_connection(database)
 
-    select_all_tasks(conn)
+    #select_all_tasks(conn)
 
     # s = serial.Serial('COM3', 9600)
     # finger=serial.Serial('COM4', 115200)#921600
@@ -203,14 +203,14 @@ def loop():
             check_exit = now.replace(hour=hours_exit, minute=minute_exit)
             if now < check_enter:
                 print("Enter")
-                insert_data(conn,(int(hex(ord(read[10]))[2:],16)))
+                insert_data(conn,(int(hex(ord(read[10]))[2:],16)),'enter')
             elif now >check_exit:
                 print("Exit")
-                insert_data(conn, (int(hex(ord(read[10]))[2:], 16)))
+                insert_data(conn, (int(hex(ord(read[10]))[2:], 16)),'exit')
             print('Connection failed. Http')
             error='cc030000bb'
             s.write(error.decode("hex"))
-            insert_data(conn, '2')
+            #insert_data(conn, '2')
             time.sleep(6)
             return None
 #        ab = http.request('GET','http://192.168.1.101/json/100/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)))
