@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import time ,urllib3,json,serial,mraa
+import time ,urllib3,json,serial,mraa,jdatetime
 import sqlite3
 from sqlite3 import Error
 
@@ -65,9 +65,9 @@ def select_all_tasks(conn):
     ''')
     conn.commit()
 
-def insert_data(conn,id):
+def insert_data(conn,id,status):
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO users(fingerid,time,status,push) VALUES ('Andy Hunter', '7/24/2012', 'Xplore Records', 1)")
+    cursor.execute("INSERT INTO users(fingerid,time,status,push) VALUES ('Andy Hunter', jdatetime.datetime.now(), status, 1)")
     conn.commit()
 
 
@@ -127,7 +127,13 @@ def Register():
 
 
 def setup():
-    global s,finger,read,conn
+    global s,finger,read,conn,hours_enter,minute_enter,hours_exit,minute_exit
+
+    hours_enter=9
+    minute_enter=0
+    hours_exit=12
+    minute_exit=0
+
     # open serial COM port to /dev/ttyS0, which maps to UART0(D0/D1)
     # the baudrate is set to 57600 and should be the same as the one
     # specified in the Arduino sketch uploaded to ATmega32U4.
@@ -189,9 +195,18 @@ def loop():
         blue.write(0)
         green.write(1)
         red.write(0)
+        now = jdatetime.datetime.now()
         try:
             ab = http.request('GET','http://185.8.175.58/json/101/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)),timeout=3.0)
         except urllib3.exceptions.HTTPError:
+            check_enter = now.replace(hour=hours_enter, minute=minute_enter)
+            check_exit = now.replace(hour=hours_exit, minute=minute_exit)
+            if now < check_enter:
+                print("Enter")
+                insert_data(conn,(int(hex(ord(read[10]))[2:],16)))
+            elif now >check_exit:
+                print("Exit")
+                insert_data(conn, (int(hex(ord(read[10]))[2:], 16)))
             print('Connection failed. Http')
             error='cc030000bb'
             s.write(error.decode("hex"))
