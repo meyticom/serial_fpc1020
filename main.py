@@ -174,6 +174,10 @@ def loop():
         return
     finger.flushInput()
     # finger.flushOutput()
+    rfid=s.read(10)
+    while(hex(ord(rfid[0]))=='0xdf'):
+        ab = http.request('GET', 'http://185.8.175.58/json/101/km1{0}/'.format('999'),
+                          timeout=3.0)
     blue.write(1)
     green.write(0)
     red.write(0)
