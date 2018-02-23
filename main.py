@@ -163,7 +163,7 @@ def setup():
     #finger.flushOutput()
     wellcome='cc010000bb'
     s.write(wellcome.decode("hex"))
-
+    s.flushInput()
 
 def loop():
     # send "1" to the Arduino sketch on ATmega32U4.
@@ -176,6 +176,8 @@ def loop():
     finger.flushInput()
     # finger.flushOutput()
     while(s.inWaiting()):
+        if s.inWaiting()<10:
+            return
 	print("wating",s.inWaiting())
         time.sleep(0.5)
         rfid=s.read(10)
