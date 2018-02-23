@@ -9,10 +9,15 @@ http = urllib3.PoolManager()
 green = mraa.Gpio(6)
 blue = mraa.Gpio(18)
 red = mraa.Gpio(19)
+interupt=mraa.Gpio(37)
+
 
 green.dir(mraa.DIR_OUT)
 blue.dir(mraa.DIR_OUT)
 red.dir(mraa.DIR_OUT)
+interupt.dir(mraa.DIR_IN)
+
+
 
 
 serial_budrate='55AA000002000500030500000000000000000000000000000E01'#set serital budrate to 115200
@@ -163,6 +168,10 @@ def setup():
 def loop():
     # send "1" to the Arduino sketch on ATmega32U4.
     # the sketch will turn on the LED attached to D13 on the board
+
+    while interupt.read()==1:
+        finger.close()
+        return
     finger.flushInput()
     # finger.flushOutput()
     blue.write(1)
