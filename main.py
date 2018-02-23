@@ -169,6 +169,7 @@ def loop():
     # send "1" to the Arduino sketch on ATmega32U4.
     # the sketch will turn on the LED attached to D13 on the board
     rfid=""
+    now = jdatetime.datetime.now()
     while interupt.read()==1:
         finger.close()
         return
@@ -177,9 +178,59 @@ def loop():
     while(s.inWaiting()):
         rfid +=s.read()
     print("rfid",rfid)
-    while False:
-        ab = http.request('GET', 'http://185.8.175.58/json/101/km1{0}/'.format('999'),
-                          timeout=3.0)
+    while (rfid==0xff):
+        try:
+            ab = http.request('GET','http://185.8.175.58/json/101/km1{0}/'.format('999'),timeout=3.0)
+            try:
+                json_data = json.loads(ab.data)
+                if json_data['enable'] == "True":
+                    if json_data['status'] == "Enter":  # ab.data =='Enter':
+                        print("Enter")
+                        wellcome = 'cc01{0}bb'.format('21')
+                        s.write(wellcome.decode("hex"))
+                        time.sleep(1.5)
+
+                    elif json_data['status'] == "Exit":  # ab.data =='Exit':
+                        print("Exit")
+                        goodbye = 'cc02{0}bb'.format('21')
+                        s.write(goodbye.decode("hex"))
+                        time.sleep(1.5)
+
+                        # elif json_data['status']=="Enter":#ab.data=='False':
+                        #     s.write(error.decode("hex"))
+                        #     time.sleep(1)
+
+                        # else:
+                        #     print(int(hex(ord(read[10]))[2:],16))
+                        #     print(ab.read())
+                elif json_data['enable'] == 'False':
+                    if json_data['status'] == "NotActivate":
+                        message = 'cc1b0000bb'
+                        s.write(message.decode("hex"))
+                        time.sleep(3)
+                    elif json_data['status'] == "Register":
+                        message = 'cc1c0000bb'
+                        s.write(message.decode("hex"))
+                        time.sleep(3)
+            except:
+                return None
+
+
+        except urllib3.exceptions.HTTPError:
+            check_enter = now.replace(hour=hours_enter, minute=minute_enter)
+            check_exit = now.replace(hour=hours_exit, minute=minute_exit)
+            if now < check_enter:
+                print("Enter")
+                insert_data(conn,(999),'enter')
+            elif now >check_exit:
+                print("Exit")
+                insert_data(conn, (999),'exit')
+            print('Connection failed. Http')
+            error='cc030000bb'
+            s.write(error.decode("hex"))
+            #insert_data(conn, '2')
+            time.sleep(6)
+            return None
     blue.write(1)
     green.write(0)
     red.write(0)
@@ -210,7 +261,6 @@ def loop():
         blue.write(0)
         green.write(1)
         red.write(0)
-        now = jdatetime.datetime.now()
         try:
             ab = http.request('GET','http://185.8.175.58/json/101/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)),timeout=3.0)
         except urllib3.exceptions.HTTPError:
