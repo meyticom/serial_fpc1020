@@ -193,13 +193,13 @@ def loop():
                         wellcome = 'cc01{0}bb'.format('21')
                         s.write(wellcome.decode("hex"))
                         time.sleep(1.5)
-
+                        rfid = "null"
                     elif json_data['status'] == "Exit":  # ab.data =='Exit':
                         print("Exit")
                         goodbye = 'cc02{0}bb'.format('21')
                         s.write(goodbye.decode("hex"))
                         time.sleep(1.5)
-
+                        rfid = "null"
                         # elif json_data['status']=="Enter":#ab.data=='False':
                         #     s.write(error.decode("hex"))
                         #     time.sleep(1)
@@ -212,10 +212,12 @@ def loop():
                         message = 'cc1b0000bb'
                         s.write(message.decode("hex"))
                         time.sleep(3)
+                        rfid = "null"
                     elif json_data['status'] == "Register":
                         message = 'cc1c0000bb'
                         s.write(message.decode("hex"))
                         time.sleep(3)
+                        rfid = "null"
             except:
                 rfid="null"
                 return None
