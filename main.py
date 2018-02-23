@@ -168,7 +168,7 @@ def setup():
 def loop():
     # send "1" to the Arduino sketch on ATmega32U4.
     # the sketch will turn on the LED attached to D13 on the board
-    rfid=""
+    rfid="null"
     now = jdatetime.datetime.now()
     while interupt.read()==1:
         finger.close()
@@ -176,9 +176,13 @@ def loop():
     finger.flushInput()
     # finger.flushOutput()
     while(s.inWaiting()):
-        rfid +=s.read()
-    print("rfid",rfid)
-    while (rfid==0xff):
+	print("wating",s.inWaiting())
+        time.sleep(0.5)
+        rfid=s.read(10)
+        print("rfid",rfid[9])
+    #print("rfid",rfid.decode("hex")
+    while (rfid[0]=='\xff' and rfid[9]=='\xdd'):
+        print("raftttttttttt")
         try:
             ab = http.request('GET','http://185.8.175.58/json/101/km1{0}/'.format('999'),timeout=3.0)
             try:
@@ -213,6 +217,7 @@ def loop():
                         s.write(message.decode("hex"))
                         time.sleep(3)
             except:
+                rfid="null"
                 return None
 
 
@@ -230,7 +235,9 @@ def loop():
             s.write(error.decode("hex"))
             #insert_data(conn, '2')
             time.sleep(6)
+            rfid="null"
             return None
+    rfid="null"
     blue.write(1)
     green.write(0)
     red.write(0)
