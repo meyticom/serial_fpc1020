@@ -177,8 +177,8 @@ def loop():
     # finger.flushOutput()
     while(s.inWaiting()):
         if s.inWaiting()<10:
+            s.flushInput()
             return
-	print("wating",s.inWaiting())
         time.sleep(0.5)
         rfid=s.read(10)
         print("rfid",rfid[9])
@@ -186,7 +186,7 @@ def loop():
     while (rfid[0]=='\xff' and rfid[9]=='\xdd'):
         print("raftttttttttt")
         try:
-            ab = http.request('GET','http://185.8.175.58/json/101/km1{0}/'.format('999'),timeout=3.0)
+            ab = http.request('GET','http://185.8.175.58/api/101/{0}/'.format(rfid[1:9]),timeout=3.0)
             try:
                 json_data = json.loads(ab.data)
                 if json_data['enable'] == "True":
