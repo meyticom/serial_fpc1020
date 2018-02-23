@@ -168,14 +168,16 @@ def setup():
 def loop():
     # send "1" to the Arduino sketch on ATmega32U4.
     # the sketch will turn on the LED attached to D13 on the board
-
+    rfid=""
     while interupt.read()==1:
         finger.close()
         return
     finger.flushInput()
     # finger.flushOutput()
-    rfid=s.read(10)
-    while(hex(ord(rfid[0]))=='0xdf'):
+    while(s.inWaiting()):
+        rfid +=s.read()
+    print("rfid",rfid)
+    while False:
         ab = http.request('GET', 'http://185.8.175.58/json/101/km1{0}/'.format('999'),
                           timeout=3.0)
     blue.write(1)
