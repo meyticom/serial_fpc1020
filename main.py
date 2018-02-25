@@ -187,42 +187,42 @@ def loop():
         print("raftttttttttt")
         try:
             ab = http.request('GET','http://185.8.175.58/api/101/{0}/'.format(rfid[1:9]),timeout=3.0)
-            try:
-                json_data = json.loads(ab.data)
-                if json_data['enable'] == "True":
-                    if json_data['status'] == "Enter":  # ab.data =='Enter':
-                        print("Enter")
-                        wellcome = 'cc01{0}bb'.format('21')
-                        s.write(wellcome.decode("hex"))
-                        time.sleep(1.5)
-                        rfid = "null"
-                    elif json_data['status'] == "Exit":  # ab.data =='Exit':
-                        print("Exit")
-                        goodbye = 'cc02{0}bb'.format('21')
-                        s.write(goodbye.decode("hex"))
-                        time.sleep(1.5)
-                        rfid = "null"
-                        # elif json_data['status']=="Enter":#ab.data=='False':
-                        #     s.write(error.decode("hex"))
-                        #     time.sleep(1)
-
-                        # else:
-                        #     print(int(hex(ord(read[10]))[2:],16))
-                        #     print(ab.read())
-                elif json_data['enable'] == 'False':
-                    if json_data['status'] == "NotActivate":
-                        message = 'cc1b0000bb'
-                        s.write(message.decode("hex"))
-                        time.sleep(3)
-                        rfid = "null"
-                    elif json_data['status'] == "Register":
-                        message = 'cc1c0000bb'
-                        s.write(message.decode("hex"))
-                        time.sleep(3)
-                        rfid = "null"
-            except:
-                rfid="null"
-                return None
+            # try:
+            #     json_data = json.loads(ab.data)
+            #     if json_data['enable'] == "True":
+            #         if json_data['status'] == "Enter":  # ab.data =='Enter':
+            #             print("Enter")
+            #             wellcome = 'cc01{0}bb'.format('21')
+            #             s.write(wellcome.decode("hex"))
+            #             time.sleep(1.5)
+            #             rfid = "null"
+            #         elif json_data['status'] == "Exit":  # ab.data =='Exit':
+            #             print("Exit")
+            #             goodbye = 'cc02{0}bb'.format('21')
+            #             s.write(goodbye.decode("hex"))
+            #             time.sleep(1.5)
+            #             rfid = "null"
+            #             # elif json_data['status']=="Enter":#ab.data=='False':
+            #             #     s.write(error.decode("hex"))
+            #             #     time.sleep(1)
+            #
+            #             # else:
+            #             #     print(int(hex(ord(read[10]))[2:],16))
+            #             #     print(ab.read())
+            #     elif json_data['enable'] == 'False':
+            #         if json_data['status'] == "NotActivate":
+            #             message = 'cc1b0000bb'
+            #             s.write(message.decode("hex"))
+            #             time.sleep(3)
+            #             rfid = "null"
+            #         elif json_data['status'] == "Register":
+            #             message = 'cc1c0000bb'
+            #             s.write(message.decode("hex"))
+            #             time.sleep(3)
+            #             rfid = "null"
+            # except:
+            #     rfid="null"
+            #     return None
 
 
         except urllib3.exceptions.HTTPError:
@@ -246,7 +246,10 @@ def loop():
     green.write(0)
     red.write(0)
     finger.write(step1.decode("hex"))
-    time.sleep(0.1)
+    time.sleep(0.25)
+    if finger.inWaiting() <26 or finger.inWaiting()>26:#NEW
+        finger.flushInput()
+        return
     read=finger.read(26)
     finger.flushInput()
     print(" ".join(hex(ord(n)) for n in read))
@@ -316,11 +319,11 @@ def loop():
                 if json_data['status']=="NotActivate":
                         message='cc1b0000bb'
                         s.write(message.decode("hex"))
-                        time.sleep(3)
+                        time.sleep(4)
                 elif json_data['status']=="Register":
                         message='cc1c0000bb'
                         s.write(message.decode("hex"))
-                        time.sleep(3)
+                        time.sleep(4)
         except:
              return None
 
