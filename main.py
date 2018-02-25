@@ -319,11 +319,11 @@ def loop():
                 if json_data['status']=="NotActivate":
                         message='cc1b0000bb'
                         s.write(message.decode("hex"))
-                        time.sleep(4)
+                        time.sleep(5)
                 elif json_data['status']=="Register":
                         message='cc1c0000bb'
                         s.write(message.decode("hex"))
-                        time.sleep(4)
+                        time.sleep(5)
         except:
              return None
 
