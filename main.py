@@ -263,6 +263,9 @@ def loop():
         finger.flushInput()
         finger.write(step3.decode("hex"))
         time.sleep(0.2)
+        if finger.inWaiting() < 26 or finger.inWaiting() > 26:  # NEW
+            finger.flushInput()
+            return
         read = finger.read(26)
         print(" ".join(hex(ord(n)) for n in read))
         finger.flushInput()
@@ -292,7 +295,7 @@ def loop():
             #insert_data(conn, '2')
             time.sleep(6)
             return None
-#        ab = http.request('GET','http://192.168.1.101/json/100/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)))
+#        ab = http.request('GET','http://192.168.1.101/jZZson/100/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)))
         try:
             json_data=json.loads(ab.data)
             if json_data['enable']=="True":
