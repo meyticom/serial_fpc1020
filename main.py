@@ -281,14 +281,14 @@ def loop():
         try:
             ab = http.request('GET','http://185.8.175.58/json/101/km1{0}/'.format(int(hex(ord(read[10]))[2:],16)),timeout=3.0)
         except urllib3.exceptions.HTTPError:
-            check_enter = now.replace(hour=hours_enter, minute=minute_enter)
-            check_exit = now.replace(hour=hours_exit, minute=minute_exit)
-            if now < check_enter:
-                print("Enter")
-                insert_data(conn,(int(hex(ord(read[10]))[2:],16)),'enter')
-            elif now >check_exit:
-                print("Exit")
-                insert_data(conn, (int(hex(ord(read[10]))[2:], 16)),'exit')
+            # check_enter = now.replace(hour=hours_enter, minute=minute_enter)
+            # check_exit = now.replace(hour=hours_exit, minute=minute_exit)
+            # if now < check_enter:
+            #     print("Enter")
+            #     insert_data(conn,(int(hex(ord(read[10]))[2:],16)),'enter')
+            # elif now >check_exit:
+            #     print("Exit")
+            #     insert_data(conn, (int(hex(ord(read[10]))[2:], 16)),'exit')
             print('Connection failed. Http')
             error='cc030000bb'
             s.write(error.decode("hex"))
