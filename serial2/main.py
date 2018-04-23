@@ -156,9 +156,9 @@ def select_all_tasks(conn):
     ''')
     conn.commit()
 
-def insert_data(id,status,push):
+def insert_data(id,fingerid,status,push):
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO users(fingerid,Clock,status,push) VALUES ('{0}','{1}','{2}', {3})".format(id,jdatetime.datetime.now(),status,push))
+    cursor.execute("INSERT INTO users(id,fingerid,Clock,status,push) VALUES ('{0}','{1}','{2}','{3}','{4}')".format(id,fingerid,jdatetime.datetime.now(),status,push))
     conn.commit()
     return True
 
