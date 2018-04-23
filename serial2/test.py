@@ -19,48 +19,35 @@ def create_connection(db_file):
     return None
 
 
-def select_all_tasks(conn):
-    # """
-    # Query all rows in the tasks table
-    # :param conn: the Connection object
-    # :return:
-    # """
-    # cur = conn.cursor()
-    # cur.execute("SELECT * FROM tasks")
-    #
-    # rows = cur.fetchall()
-    #
-    # for row in rows:
-    #     print(row)
+def insert_data(id,fingerid,status,push):
     cursor = conn.cursor()
-    cursor.execute('''
-        CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT, fingerid TEXT,
-                           Clock TEXT, status TEXT , push BOOL)
-    ''')
+    cursor.execute("INSERT INTO users(id,fingerid,Clock,status,push) VALUES ('{0}','{1}','{2}','{3}','{4}')".format(id,fingerid,str(jdatetime.datetime.now()),status,push))
     conn.commit()
-
-def insert_data(conn,id,status,push):
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO users(fingerid,Clock,status,push) VALUES ('{0}','{1}','{2}', {3})".format(id,str(jdatetime.datetime.now()),status,push))
-    conn.commit()
+    return True
 
 
-def update_data(conn,id,status):
+def update_data(id,status):
     cursor = conn.cursor()
     # cursor.execute("INSERT INTO users(fingerid,time,status,push) VALUES ('Andy Hunter', '7/24/2012', 'Xplore Records', 1)")
     conn.execute("UPDATE users set status = ? where ID = ?",(status,id))
     conn.commit()
 
+
 def LastLogin(fingerid):
+    print("finger id",fingerid)
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM users WHERE (Clock = (SELECT MAX(Clock) FROM users) AND fingerid=?)",fingerid)
-    return cursor
+    rows=cursor.execute("SELECT * FROM users WHERE (Clock = (SELECT MAX(Clock) FROM users) AND fingerid=?)",(fingerid,))
+    for row in rows:
+        return row
 
 def GetEndId():
     cursor =conn.cursor()
-    rows=cursor.execute("SELECT * FROM users WHERE ID = (SELECT MAX(ID)  FROM users)")
+    # rows = cursor.execute("SELECT * FROM users WHERE ID = (SELECT MAX(ID)  FROM users)")
+    rows = cursor.execute("SELECT MAX(ID)  FROM users")
     for row in rows:
-        return row[1]
+        return (int(row[0])+1)
+
+
 
 
 if __name__ == '__main__':
@@ -73,12 +60,8 @@ if __name__ == '__main__':
     # insert_data(conn,'3','Exit',push=1)
     # print(LastLogin('Enter','1397-02-01 00:44:34.594588'))
     # rows =LastLogin('Enter','1397-02-01 00:44:34.594588').fetchall()
-
-    rows = LastLogin('3')
-    for row in rows:
-        print(row)
-
-    # print(GetEndId())
+    print(GetEndId())
+    insert_data(GetEndId(),'22','Enter',0)
 
 
 
