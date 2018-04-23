@@ -18,8 +18,8 @@
       <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="56" column="17" lean-forward="true" selection-start-line="56" selection-start-column="17" selection-end-line="56" selection-end-column="17" />
+            <state relative-caret-position="901">
+              <caret line="56" column="17" lean-forward="false" selection-start-line="56" selection-start-column="17" selection-end-line="56" selection-end-column="17" />
               <folding>
                 <marker date="1524480269916" expanded="true" signature="748:883" ph="CREATE TABLE... users" />
                 <marker date="1524480269916" expanded="true" signature="997:1074" ph="INSERT INTO users... " />
@@ -37,8 +37,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="184" column="4" lean-forward="false" selection-start-line="184" selection-start-column="4" selection-end-line="184" selection-end-column="4" />
+            <state relative-caret-position="374">
+              <caret line="261" column="16" lean-forward="false" selection-start-line="261" selection-start-column="16" selection-end-line="261" selection-end-column="16" />
               <folding>
                 <element signature="e#18#65#0" expanded="true" />
                 <element signature="e#824#1291#0" expanded="false" />
@@ -49,13 +49,13 @@
                 <element signature="e#3495#3790#0" expanded="false" />
                 <element signature="e#3824#4306#0" expanded="false" />
                 <element signature="e#4593#4832#0" expanded="false" />
-                <marker date="1524481826686" expanded="true" signature="4145:4279" ph="CREATE TABLE... users" />
-                <marker date="1524481826686" expanded="true" signature="4393:4469" ph="INSERT INTO users... " />
-                <marker date="1524481826686" expanded="true" signature="4760:4800" ph="UPDATE users... " />
-                <marker date="1524481826686" expanded="true" signature="4912:4993" ph="SELECT * FRO... users" />
-                <marker date="1524481826686" expanded="true" signature="4948:4976" ph="SELECT MAX(C... users" />
-                <marker date="1524481826686" expanded="true" signature="5115:5174" ph="SELECT * FRO... users" />
-                <marker date="1524481826686" expanded="true" signature="5147:5173" ph="SELECT MAX(I... users" />
+                <marker date="1524490311722" expanded="true" signature="4145:4279" ph="CREATE TABLE... users" />
+                <marker date="1524490311722" expanded="true" signature="4393:4469" ph="INSERT INTO users... " />
+                <marker date="1524490311722" expanded="true" signature="4760:4800" ph="UPDATE users... " />
+                <marker date="1524490311722" expanded="true" signature="4912:4993" ph="SELECT * FRO... users" />
+                <marker date="1524490311722" expanded="true" signature="4948:4976" ph="SELECT MAX(C... users" />
+                <marker date="1524490311722" expanded="true" signature="5115:5174" ph="SELECT * FRO... users" />
+                <marker date="1524490311722" expanded="true" signature="5147:5173" ph="SELECT MAX(I... users" />
               </folding>
             </state>
           </provider>
@@ -105,6 +105,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -120,7 +121,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -365,6 +365,48 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="952">
+          <caret line="56" column="17" lean-forward="true" selection-start-line="56" selection-start-column="17" selection-end-line="56" selection-end-column="17" />
+          <folding>
+            <marker date="1524480269916" expanded="true" signature="748:883" ph="CREATE TABLE... users" />
+            <marker date="1524480269916" expanded="true" signature="997:1074" ph="INSERT INTO users... " />
+            <marker date="1524480269916" expanded="true" signature="1354:1394" ph="UPDATE users... " />
+            <marker date="1524480269916" expanded="true" signature="1500:1581" ph="SELECT id FR... users" />
+            <marker date="1524480269916" expanded="true" signature="1536:1564" ph="SELECT MAX(C... users" />
+            <marker date="1524480269916" expanded="true" signature="1679:1693" ph="SELECT * FRO... TABLE" />
+            <marker date="1524480269916" expanded="true" signature="1679:1738" ph="SELECT * FRO... users" />
+            <marker date="1524480269916" expanded="true" signature="1711:1737" ph="SELECT MAX(I... users" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1972">
+          <caret line="184" column="4" lean-forward="false" selection-start-line="184" selection-start-column="4" selection-end-line="184" selection-end-column="4" />
+          <folding>
+            <element signature="e#18#65#0" expanded="true" />
+            <element signature="e#824#1291#0" expanded="false" />
+            <element signature="e#1318#1408#0" expanded="false" />
+            <element signature="e#1430#1730#0" expanded="false" />
+            <element signature="e#1752#1933#0" expanded="false" />
+            <element signature="e#1955#2398#0" expanded="false" />
+            <element signature="e#3495#3790#0" expanded="false" />
+            <element signature="e#3824#4306#0" expanded="false" />
+            <element signature="e#4593#4832#0" expanded="false" />
+            <marker date="1524490311722" expanded="true" signature="4145:4279" ph="CREATE TABLE... users" />
+            <marker date="1524490311722" expanded="true" signature="4393:4469" ph="INSERT INTO users... " />
+            <marker date="1524490311722" expanded="true" signature="4760:4800" ph="UPDATE users... " />
+            <marker date="1524490311722" expanded="true" signature="4912:4993" ph="SELECT * FRO... users" />
+            <marker date="1524490311722" expanded="true" signature="4948:4976" ph="SELECT MAX(C... users" />
+            <marker date="1524490311722" expanded="true" signature="5115:5174" ph="SELECT * FRO... users" />
+            <marker date="1524490311722" expanded="true" signature="5147:5173" ph="SELECT MAX(I... users" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
@@ -394,13 +436,13 @@
             <element signature="e#3495#3790#0" expanded="false" />
             <element signature="e#3824#4306#0" expanded="false" />
             <element signature="e#4593#4832#0" expanded="false" />
-            <marker date="1524481826686" expanded="true" signature="4145:4279" ph="CREATE TABLE... users" />
-            <marker date="1524481826686" expanded="true" signature="4393:4469" ph="INSERT INTO users... " />
-            <marker date="1524481826686" expanded="true" signature="4760:4800" ph="UPDATE users... " />
-            <marker date="1524481826686" expanded="true" signature="4912:4993" ph="SELECT * FRO... users" />
-            <marker date="1524481826686" expanded="true" signature="4948:4976" ph="SELECT MAX(C... users" />
-            <marker date="1524481826686" expanded="true" signature="5115:5174" ph="SELECT * FRO... users" />
-            <marker date="1524481826686" expanded="true" signature="5147:5173" ph="SELECT MAX(I... users" />
+            <marker date="1524490311722" expanded="true" signature="4145:4279" ph="CREATE TABLE... users" />
+            <marker date="1524490311722" expanded="true" signature="4393:4469" ph="INSERT INTO users... " />
+            <marker date="1524490311722" expanded="true" signature="4760:4800" ph="UPDATE users... " />
+            <marker date="1524490311722" expanded="true" signature="4912:4993" ph="SELECT * FRO... users" />
+            <marker date="1524490311722" expanded="true" signature="4948:4976" ph="SELECT MAX(C... users" />
+            <marker date="1524490311722" expanded="true" signature="5115:5174" ph="SELECT * FRO... users" />
+            <marker date="1524490311722" expanded="true" signature="5147:5173" ph="SELECT MAX(I... users" />
           </folding>
         </state>
       </provider>
@@ -426,13 +468,13 @@
             <element signature="e#3495#3790#0" expanded="false" />
             <element signature="e#3824#4306#0" expanded="false" />
             <element signature="e#4593#4832#0" expanded="false" />
-            <marker date="1524481826686" expanded="true" signature="4145:4279" ph="CREATE TABLE... users" />
-            <marker date="1524481826686" expanded="true" signature="4393:4469" ph="INSERT INTO users... " />
-            <marker date="1524481826686" expanded="true" signature="4760:4800" ph="UPDATE users... " />
-            <marker date="1524481826686" expanded="true" signature="4912:4993" ph="SELECT * FRO... users" />
-            <marker date="1524481826686" expanded="true" signature="4948:4976" ph="SELECT MAX(C... users" />
-            <marker date="1524481826686" expanded="true" signature="5115:5174" ph="SELECT * FRO... users" />
-            <marker date="1524481826686" expanded="true" signature="5147:5173" ph="SELECT MAX(I... users" />
+            <marker date="1524490311722" expanded="true" signature="4145:4279" ph="CREATE TABLE... users" />
+            <marker date="1524490311722" expanded="true" signature="4393:4469" ph="INSERT INTO users... " />
+            <marker date="1524490311722" expanded="true" signature="4760:4800" ph="UPDATE users... " />
+            <marker date="1524490311722" expanded="true" signature="4912:4993" ph="SELECT * FRO... users" />
+            <marker date="1524490311722" expanded="true" signature="4948:4976" ph="SELECT MAX(C... users" />
+            <marker date="1524490311722" expanded="true" signature="5115:5174" ph="SELECT * FRO... users" />
+            <marker date="1524490311722" expanded="true" signature="5147:5173" ph="SELECT MAX(I... users" />
           </folding>
         </state>
       </provider>
@@ -451,21 +493,21 @@
             <element signature="e#3495#3790#0" expanded="false" />
             <element signature="e#3824#4306#0" expanded="false" />
             <element signature="e#4593#4832#0" expanded="false" />
-            <marker date="1524481826686" expanded="true" signature="4145:4279" ph="CREATE TABLE... users" />
-            <marker date="1524481826686" expanded="true" signature="4393:4469" ph="INSERT INTO users... " />
-            <marker date="1524481826686" expanded="true" signature="4760:4800" ph="UPDATE users... " />
-            <marker date="1524481826686" expanded="true" signature="4912:4993" ph="SELECT * FRO... users" />
-            <marker date="1524481826686" expanded="true" signature="4948:4976" ph="SELECT MAX(C... users" />
-            <marker date="1524481826686" expanded="true" signature="5115:5174" ph="SELECT * FRO... users" />
-            <marker date="1524481826686" expanded="true" signature="5147:5173" ph="SELECT MAX(I... users" />
+            <marker date="1524490311722" expanded="true" signature="4145:4279" ph="CREATE TABLE... users" />
+            <marker date="1524490311722" expanded="true" signature="4393:4469" ph="INSERT INTO users... " />
+            <marker date="1524490311722" expanded="true" signature="4760:4800" ph="UPDATE users... " />
+            <marker date="1524490311722" expanded="true" signature="4912:4993" ph="SELECT * FRO... users" />
+            <marker date="1524490311722" expanded="true" signature="4948:4976" ph="SELECT MAX(C... users" />
+            <marker date="1524490311722" expanded="true" signature="5115:5174" ph="SELECT * FRO... users" />
+            <marker date="1524490311722" expanded="true" signature="5147:5173" ph="SELECT MAX(I... users" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="56" column="17" lean-forward="true" selection-start-line="56" selection-start-column="17" selection-end-line="56" selection-end-column="17" />
+        <state relative-caret-position="901">
+          <caret line="56" column="17" lean-forward="false" selection-start-line="56" selection-start-column="17" selection-end-line="56" selection-end-column="17" />
           <folding>
             <marker date="1524480269916" expanded="true" signature="748:883" ph="CREATE TABLE... users" />
             <marker date="1524480269916" expanded="true" signature="997:1074" ph="INSERT INTO users... " />
@@ -481,8 +523,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="184" column="4" lean-forward="false" selection-start-line="184" selection-start-column="4" selection-end-line="184" selection-end-column="4" />
+        <state relative-caret-position="374">
+          <caret line="261" column="16" lean-forward="false" selection-start-line="261" selection-start-column="16" selection-end-line="261" selection-end-column="16" />
           <folding>
             <element signature="e#18#65#0" expanded="true" />
             <element signature="e#824#1291#0" expanded="false" />
@@ -493,13 +535,13 @@
             <element signature="e#3495#3790#0" expanded="false" />
             <element signature="e#3824#4306#0" expanded="false" />
             <element signature="e#4593#4832#0" expanded="false" />
-            <marker date="1524481826686" expanded="true" signature="4145:4279" ph="CREATE TABLE... users" />
-            <marker date="1524481826686" expanded="true" signature="4393:4469" ph="INSERT INTO users... " />
-            <marker date="1524481826686" expanded="true" signature="4760:4800" ph="UPDATE users... " />
-            <marker date="1524481826686" expanded="true" signature="4912:4993" ph="SELECT * FRO... users" />
-            <marker date="1524481826686" expanded="true" signature="4948:4976" ph="SELECT MAX(C... users" />
-            <marker date="1524481826686" expanded="true" signature="5115:5174" ph="SELECT * FRO... users" />
-            <marker date="1524481826686" expanded="true" signature="5147:5173" ph="SELECT MAX(I... users" />
+            <marker date="1524490311722" expanded="true" signature="4145:4279" ph="CREATE TABLE... users" />
+            <marker date="1524490311722" expanded="true" signature="4393:4469" ph="INSERT INTO users... " />
+            <marker date="1524490311722" expanded="true" signature="4760:4800" ph="UPDATE users... " />
+            <marker date="1524490311722" expanded="true" signature="4912:4993" ph="SELECT * FRO... users" />
+            <marker date="1524490311722" expanded="true" signature="4948:4976" ph="SELECT MAX(C... users" />
+            <marker date="1524490311722" expanded="true" signature="5115:5174" ph="SELECT * FRO... users" />
+            <marker date="1524490311722" expanded="true" signature="5147:5173" ph="SELECT MAX(I... users" />
           </folding>
         </state>
       </provider>

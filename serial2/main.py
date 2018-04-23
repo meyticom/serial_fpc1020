@@ -248,6 +248,7 @@ def loop():
     # the sketch will turn on the LED attached to D13 on the board
     rfid="null"
     now = jdatetime.datetime.now()
+    print(now)
     while interupt.read()==1:
         finger.close()
         return
@@ -258,6 +259,7 @@ def loop():
             s.flushInput()
             return
         time.sleep(0.5)
+        print("2")
         rfid=s.read(10)
         ReadFingerPrint()
         print("rfid",rfid[9])
