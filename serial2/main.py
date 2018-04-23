@@ -156,14 +156,14 @@ def select_all_tasks(conn):
     ''')
     conn.commit()
 
-def insert_data(conn,id,status,push):
+def insert_data(id,status,push):
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO users(fingerid,time,status,push) VALUES ('{0}','{1}','{2}', {3})".format(id,jdatetime.datetime.now(),status,push))
+    cursor.execute("INSERT INTO users(fingerid,Clock,status,push) VALUES ('{0}','{1}','{2}', {3})".format(id,jdatetime.datetime.now(),status,push))
     conn.commit()
     return True
 
 
-def update_data(conn,id,status):
+def update_data(id,status):
     cursor = conn.cursor()
     # cursor.execute("INSERT INTO users(fingerid,time,status,push) VALUES ('Andy Hunter', '7/24/2012', 'Xplore Records', 1)")
     conn.execute("UPDATE users set status = ? where ID = ?",(status,id))
@@ -171,8 +171,9 @@ def update_data(conn,id,status):
 
 
 def LastLogin(fingerid):
+    print("finger id",fingerid)
     cursor = conn.cursor()
-    rows=cursor.execute("SELECT * FROM users WHERE (Clock = (SELECT MAX(Clock) FROM users) AND fingerid=?)",fingerid)
+    rows=cursor.execute("SELECT * FROM users WHERE (Clock = (SELECT MAX(Clock) FROM users) AND fingerid=?)",(fingerid,))
     for row in rows:
         return row
 
@@ -184,16 +185,17 @@ def GetEndId():
 
 def WriteDb(fingerid):
     status = LastLogin(fingerid)
-    if status[3] == 'Enter':
+    print(status)
+    if status[4] == 'Enter':
         insert_data(GetEndId(), 'Exit', 0)
         print("Exit")
-        goodbye = 'cc02{0}bb'.format(read[9:11].encode("hex"))
+        goodbye = 'cc0200bb'
         s.write(goodbye.decode("hex"))
         time.sleep(1.5)
     else:
         print("Enter")
         insert_data(GetEndId(), 'Enter', 0)
-        wellcome = 'cc01{0}bb'.format(read[9:11].encode("hex"))
+        wellcome = 'cc0100bb'
         s.write(wellcome.decode("hex"))
         time.sleep(1.5)
     return True
