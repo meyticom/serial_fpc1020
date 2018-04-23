@@ -203,44 +203,32 @@ def WriteDb(fingerid):
 
 
 def ReadFingerPrint():
-    rfid = s.read(10)
-    print("rfid", rfid[9])
-    if finger.inWaiting() <26 or finger.inWaiting()>26:#NEW
-        finger.flushInput()
-        return False
-    read=finger.read(26)
     finger.flushInput()
+    finger.write(step2.decode("hex"))
+    time.sleep(0.4)
+    read = finger.read(26)
     print(" ".join(hex(ord(n)) for n in read))
-    if ((hex(ord(read[0])) == '0xaa')) and (hex(ord(read[4])) == '0x20') and (hex(ord(read[8])) == '0x0'):
-        print("True")
+    finger.flushInput()
+    finger.write(step3.decode("hex"))
+    time.sleep(0.2)
+    if finger.inWaiting() < 26 or finger.inWaiting() > 26:  # NEW
         finger.flushInput()
-        finger.write(step2.decode("hex"))
-        time.sleep(0.4)
-        read = finger.read(26)
-        print(" ".join(hex(ord(n)) for n in read))
-        finger.flushInput()
-        finger.write(step3.decode("hex"))
-        time.sleep(0.2)
-        if finger.inWaiting() < 26 or finger.inWaiting() > 26:  # NEW
-            finger.flushInput()
-            return False
-        read = finger.read(26)
-        print(" ".join(hex(ord(n)) for n in read))
-        finger.flushInput()
-        if hex(ord(read[4])) == '0x63' and hex(ord(read[6])) == '0x2':
-            blue.write(0)
-            green.write(0)
-            red.write(1)
-            time.sleep(1)
-            return False
-        blue.write(0)
-        green.write(1)
-        red.write(0)
-        WriteDb(int(hex(ord(read[10]))[2:],16))
-
-    elif (hex(ord(read[0])) == '0xaa') and (hex(ord(read[4])) == '0x20') and (hex(ord(read[8])) == '0x28'):
-        print("False")
         return False
+    read = finger.read(26)
+    print(" ".join(hex(ord(n)) for n in read))
+    finger.flushInput()
+    if hex(ord(read[4])) == '0x63' and hex(ord(read[6])) == '0x2':
+        blue.write(0)
+        green.write(0)
+        red.write(1)
+        time.sleep(1)
+        return False
+    blue.write(0)
+    green.write(1)
+    red.write(0)
+    WriteDb(int(hex(ord(read[10]))[2:],16))
+
+
 
 
 def loop():
@@ -261,8 +249,24 @@ def loop():
         time.sleep(0.5)
         print("2")
         rfid=s.read(10)
+        # ReadFingerPrint()
+        # print("rfid",rfid[9])
+    blue.write(1)
+    green.write(0)
+    red.write(0)
+    finger.write(step1.decode("hex"))
+    time.sleep(0.25)
+    if finger.inWaiting() < 26 or finger.inWaiting() > 26:  # NEW
+        finger.flushInput()
+        return
+    read = finger.read(26)
+    finger.flushInput()
+    print(" ".join(hex(ord(n)) for n in read))
+    if ((hex(ord(read[0])) == '0xaa')) and (hex(ord(read[4])) == '0x20') and (hex(ord(read[8])) == '0x0'):
         ReadFingerPrint()
-        print("rfid",rfid[9])
+    elif (hex(ord(read[0])) == '0xaa') and (hex(ord(read[4])) == '0x20') and (hex(ord(read[8])) == '0x28'):
+        print("False")
+
 
 
 if __name__ == '__main__':
